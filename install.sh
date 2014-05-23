@@ -11,7 +11,7 @@ sudo add-apt-repository -y ppa:webupd8team/java
 
 apt-get update
 
-apt-get install oracle-java7-install
+apt-get install oracle-java7-installer
 
 
 

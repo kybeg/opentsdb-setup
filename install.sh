@@ -52,5 +52,8 @@ tar xzf $hbase.tar.gz
 
 echo $HBASE_SITE > $INSTALL_DIR/$hbase/conf/hbase-site.xml
 
+echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> $INSTALL_DIR/$hbase/conf/hbase-env.sh
 
+######################
 # Install OpenTSDB
+######################

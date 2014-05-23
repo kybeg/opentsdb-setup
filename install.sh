@@ -15,18 +15,18 @@ cd $INSTALL_DIR;
 myip=$(ifconfig eth0 | grep "inet addr" | cut -f 2 -d ":" | cut -f 1 -d " ")
 
 
-HBASE_SITE='<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+HBASE_SITE="<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='configuration.xsl'?>
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>file:///DIRECTORY/hbase</value>
+    <value>file://$INSTALL_DIR/hbase</value>
   </property>
   <property>
     <name>hbase.zookeeper.property.dataDir</name>
-    <value>/DIRECTORY/zookeeper</value>
+    <value>$INSTALL_DIR/zookeeper</value>
   </property>
-</configuration>';
+</configuration>";
 
 # enter the correct hostname in /etc/hosts
 echo $myip $(hostname) >> /etc/hosts
@@ -50,7 +50,7 @@ wget http://apache.mirrors.hoobly.com/hbase/stable/${hbase}.tar.gz
 
 tar xzf $hbase.tar.gz
 
-echo $HBASE_SITE | sed -e "s/DIRECTORY/$INSTALL_DIR/" > $INSTALL_DIR/$hbase/conf/hbase-site.xml
+echo $HBASE_SITE > $INSTALL_DIR/$hbase/conf/hbase-site.xml
 
 
 # Install OpenTSDB

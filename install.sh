@@ -7,7 +7,7 @@
 
 # Install oracle Java
 
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" > /etc/apt/sources.list.d/oracle.conf
+sudo add-apt-repository ppa:webupd8team/java
 
 apt-get update
 

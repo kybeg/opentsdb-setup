@@ -11,7 +11,7 @@ sudo add-apt-repository -y ppa:webupd8team/java
 
 apt-get update
 
-apt-get install oracle-java7-installer
+apt-get install -y oracle-java7-installer binutils gnuplot make
 
 
 

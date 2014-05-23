@@ -86,4 +86,18 @@ export HBASE_HOME=$INSTALL_DIR/$hbase
 
 ./create_table.sh
 
-tsdb tsd --cachedir=/tsdb/tmp --port=4242 --staticroot=/tsdb/hbase-0.94.19 --zkquorum=127.0.0.1:2181 --auto-metric &
+$INSTALL_DIR/$hbase/bin/stop-hbase.sh
+
+echo "description     'OpenTSDB on HBASE'
+
+# no start option as you might not want it to auto-start
+# This might not be supported - you might need a: start on runlevel [3]
+stop on runlevel [!2345]
+
+# if you want it to automatically restart if it crashes, leave the next line in
+# respawn
+
+script
+/tsdb/$hbase/bin/start-hbase.sh
+tsdb tsd --cachedir=/tsdb/tmp --port=4242 --staticroot=/usr/local/share/opentsdb/static --zkquorum=127.0.0.1:2181 --auto-metric 
+end script" > /etc/init/tsdb.conf

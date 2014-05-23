@@ -7,7 +7,7 @@
 
 # Install oracle Java
 
-sudo add-apt-repository ppa:webupd8team/java
+sudo add-apt-repository -y ppa:webupd8team/java
 
 apt-get update
 

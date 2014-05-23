@@ -44,7 +44,7 @@ echo $myip $(hostname) >> /etc/hosts
 # Install HBASE
 ######################
 
-$hbase="hbase-0.94.19"; 
+hbase="hbase-0.94.19"; 
 
 wget http://apache.mirrors.hoobly.com/hbase/stable/${hbase}.tar.gz
 

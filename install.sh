@@ -1,13 +1,18 @@
-#!/bin/bash
+#!/bin/bash -x
 
 
 # variables
 
 DOWNLOAD_DIR="/download";
 INSTALL_DIR="/tsdb";
+CACHE_DIR="/tsdb/tmp";
+CACHE_SIZE="500M";
+
+
 
 mkdir $DOWNLOAD_DIR;
 mkdir $INSTALL_DIR;
+mkdir $CACHE_DIR;
 mkdir "$INSTALL_DIR/zookeeper"
 mkdir "$INSTALL_DIR/hbase"
 cd $INSTALL_DIR;
@@ -31,13 +36,17 @@ HBASE_SITE="<?xml version='1.0'?>
 # enter the correct hostname in /etc/hosts
 echo $myip $(hostname) >> /etc/hosts
 
+echo "tmpfs $CACHE_DIR tmpfs size=$CACHE_SIZE,mode=0777 0 0" >> /etc/fstab
+
+mount -a
+
 # Install oracle Java
 
-# sudo add-apt-repository -y ppa:webupd8team/java
+sudo add-apt-repository -y ppa:webupd8team/java
 
-# apt-get update
+apt-get update
 
-# apt-get install -y oracle-java7-installer binutils gnuplot make
+apt-get install -y oracle-java7-installer binutils gnuplot make dh-autoreconf
 
 
 ######################
@@ -57,3 +66,18 @@ echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> $INSTALL_DIR/$hbase/conf/h
 ######################
 # Install OpenTSDB
 ######################
+
+git clone git://github.com/OpenTSDB/opentsdb.git
+
+cd opentsdb
+
+./build.sh
+
+cd build
+
+make install
+
+cd ../src
+
+export COMPRESSION=LZO 
+export HBASE_HOME=$INSTALL_DIR/$hbase

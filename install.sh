@@ -3,6 +3,15 @@
 
 # variables
 
+DOWNLOAD_DIR="/download";
+
+INSTALL_DIR="/tsdb";
+
+mkdir $DOWNLOAD_DIR;
+mkdir $INSTALL_DIR;
+
+cd $INSTALL_DIR;
+
 myip=$(ifconfig eth0 | grep "inet addr" | cut -f 2 -d ":" | cut -f 1 -d " ")
 
 echo $myip $(hostname) >> /etc/hosts
@@ -27,7 +36,9 @@ echo $myip $(hostname) >> /etc/hosts
 
 # Install HBASE
 
+wget http://apache.mirrors.hoobly.com/hbase/stable/hbase-0.94.19.tar.gz
 
+tar xzf hbase-0.94.19.tar.gz
 
 # Install Hadoop
 

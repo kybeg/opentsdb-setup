@@ -46,7 +46,7 @@ sudo add-apt-repository -y ppa:webupd8team/java
 
 apt-get update
 
-apt-get install -y oracle-java7-installer binutils gnuplot make dh-autoreconf
+apt-get install -y oracle-java7-installer binutils gnuplot make dh-autoreconf liblzo2-dev
 
 
 ######################
@@ -62,6 +62,8 @@ tar xzf $hbase.tar.gz
 echo $HBASE_SITE > $INSTALL_DIR/$hbase/conf/hbase-site.xml
 
 echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> $INSTALL_DIR/$hbase/conf/hbase-env.sh
+
+$INSTALL_DIR/$hbase/bin/start-hbase.sh
 
 ######################
 # Install OpenTSDB
@@ -79,5 +81,9 @@ make install
 
 cd ../src
 
-export COMPRESSION=LZO 
+export COMPRESSION=GZ
 export HBASE_HOME=$INSTALL_DIR/$hbase
+
+./create_table.sh
+
+tsdb tsd --cachedir=/tsdb/tmp --port=4242 --staticroot=/tsdb/hbase-0.94.19 --zkquorum=127.0.0.1:2181 --auto-metric &

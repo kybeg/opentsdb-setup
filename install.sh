@@ -4,25 +4,32 @@
 # variables
 
 DOWNLOAD_DIR="/download";
-
 INSTALL_DIR="/tsdb";
 
 mkdir $DOWNLOAD_DIR;
 mkdir $INSTALL_DIR;
-
+mkdir "$INSTALL_DIR/zookeeper"
+mkdir "$INSTALL_DIR/hbase"
 cd $INSTALL_DIR;
 
 myip=$(ifconfig eth0 | grep "inet addr" | cut -f 2 -d ":" | cut -f 1 -d " ")
 
-echo $myip $(hostname) >> /etc/hosts
+
+HBASE_SITE='<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>file:///DIRECTORY/hbase</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/DIRECTORY/zookeeper</value>
+  </property>
+</configuration>';
 
 # enter the correct hostname in /etc/hosts
-
-
-
-# update
-
-
+echo $myip $(hostname) >> /etc/hosts
 
 # Install oracle Java
 
@@ -33,15 +40,17 @@ echo $myip $(hostname) >> /etc/hosts
 # apt-get install -y oracle-java7-installer binutils gnuplot make
 
 
-
+######################
 # Install HBASE
+######################
 
-wget http://apache.mirrors.hoobly.com/hbase/stable/hbase-0.94.19.tar.gz
+$hbase="hbase-0.94.19"; 
 
-tar xzf hbase-0.94.19.tar.gz
+wget http://apache.mirrors.hoobly.com/hbase/stable/${hbase}.tar.gz
 
-# Install Hadoop
+tar xzf $hbase.tar.gz
 
+echo $HBASE_SITE | sed -e "s/DIRECTORY/$INSTALL_DIR/" > $INSTALL_DIR/conf/hbase-site.xml
 
 
 # Install OpenTSDB

@@ -50,7 +50,7 @@ wget http://apache.mirrors.hoobly.com/hbase/stable/${hbase}.tar.gz
 
 tar xzf $hbase.tar.gz
 
-echo $HBASE_SITE | sed -e "s/DIRECTORY/$INSTALL_DIR/" > $INSTALL_DIR/conf/hbase-site.xml
+echo $HBASE_SITE | sed -e "s/DIRECTORY/$INSTALL_DIR/" > $INSTALL_DIR/$hbase/conf/hbase-site.xml
 
 
 # Install OpenTSDB

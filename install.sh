@@ -1,5 +1,6 @@
 #!/bin/bash -x
 
+hbase="hbase-1.1.2-bin"; 
 
 # variables
 
@@ -53,7 +54,7 @@ apt-get install -y oracle-java7-installer binutils gnuplot make dh-autoreconf li
 # Install HBASE
 ######################
 
-hbase="hbase-0.94.19"; 
+
 
 wget http://apache.mirrors.hoobly.com/hbase/stable/${hbase}.tar.gz
 
